@@ -1,0 +1,309 @@
+
+body {
+  margin:0;
+  background-image: linear-gradient(180deg, rgb(0, 140, 255), white, rgb(250, 185, 8));
+  overflow-x: hidden;
+}
+
+
+*,*::before, ::after {
+  box-sizing: border-box;
+  font-family:'Montserrat', sans-serif;
+}
+
+
+.splash-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 66vh;
+}
+
+.splash-title {
+  font-family: 'Bangers', cursive;
+  font-size: 10rem;
+}
+
+.splash-battleship-image {
+  position:absolute;
+  opacity: 90%;
+  bottom:10vh;
+  left: 25vw;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.btn {
+  font-size: inherit;
+  background-color: rgb(250, 108, 13);
+  padding: .5em 1em;
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: .2em;
+  color: #333;
+}
+.btn:hover, btn:focus {
+  background-color: rgb(190, 81, 7); ;
+}
+
+.splash-btn {
+  font-size: 2rem;
+  margin-left: 2rem;
+}
+
+.splash-btn:first-child {
+  margin-left: 0;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.battleship-grid {
+  margin: 2vmin;
+  display: grid;
+  background-color: rgba(83, 196, 248, 0.87);
+  grid-template-rows: repeat(10, 4.6vmin);
+  grid-template-columns: repeat(10, 4.6vmin);
+}
+
+.grid-computer > .taken {
+  background-color: rgba(83, 196, 248, 0.87) !important;
+  border-radius: 0 !important;
+}
+
+.taken,
+.ship {
+  position: relative;
+  background-color: hsl(0, 0%, 80%);
+}
+
+.taken.start.vertical,
+.taken.start.vertical::before {
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+}
+
+.taken.end.vertical,
+.taken.end.vertical::before {
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+.taken.start.horizontal,
+.taken.start.horizontal::before {
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+
+.taken.end.horizontal,
+.taken.end.horizontal::before {
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+.taken.vertical::before,
+.taken.horizontal::before{
+  content: '';
+  position: absolute;
+  border: .3vmin solid white;
+  top: -1px;
+  bottom: -1px;
+  left:-1px;
+  right:-1px;
+}
+
+.taken.horizontal::before {
+  animation: ripplesY 3s linear infinite;
+  border-left: none;
+  border-right: none;
+}
+
+.taken.vertical::before {
+  animation: ripplesX 3s linear infinite;
+  border-top: none;
+  border-bottom: none;
+}
+
+@keyframes ripplesX {
+  0% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(1.5);
+  }
+}
+
+@keyframes ripplesY {
+  0% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(1.5);
+  }
+}
+
+.battleship-grid div {
+  border: 1px solid hsla(0,0%, 100%, 02);
+}
+  
+.grid-display {
+  display: flex;
+}
+
+.ship >  div {
+  width: 4.6vmin;
+  height: 4.6vmin;
+}
+
+.ship {
+  display:flex;
+  flex-wrap: wrap;
+  margin: 1vmin;
+  width: calc(4.6vmin * var(--width, 1));
+  height: calc(4.6vmin * var(--height, 1));
+  border-radius: 2.3vmin;
+}
+  
+.destroyer-container {
+  --width: 2;
+}
+.destroyer-container-vertical {
+  --height: 2;
+  --width: 1;
+}
+  
+.submarine-container {
+  --width: 3;
+}
+  
+.submarine-container-vertical {
+  --height: 3;
+  --width: 1;
+}
+  
+.cruiser-container {
+  --width: 3;
+}
+  
+.cruiser-container-vertical {
+  --height: 3;
+  --width: 1;
+}
+  
+.battleship-container {
+  --width: 4;
+}
+  
+.battleship-container-vertical {
+  --height: 4;
+  --width: 1;
+}
+  
+  
+.carrier-container {
+  --width: 5;
+}
+  
+.carrier-container-vertical {
+  --height: 5;
+  --width: 1;
+}
+  
+.hidden-info {
+  font-size: 1.5rem;
+  align-items: center;
+  flex-direction: column;
+}
+
+.info-text {
+  margin: 1rem;
+}
+
+.miss,
+.boom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.boom:after,
+.miss::after {
+  content: '';
+  position:absolute;
+  border-radius: 100%;
+  width: 2vmin;
+  height: 2vmin;
+}
+
+.miss::after {
+  background-color: white;
+}
+.boom:after {
+  background-color: rgb(235, 13, 13);
+}
+
+.miss::before {
+  content: '';
+  position: absolute;
+  animation: hit .2s ease-out forwards;
+  border-width: .1vmin;
+  border-style: solid;
+  border: .1vmin solid white;
+  border-radius: 100%;
+  width: 2vmin;
+  height: 2vmin;
+} 
+
+.boom {
+  content: '';
+  animation: boom .2s ease-out forwards;
+}
+
+.miss::before {
+  border-color: white;
+}
+
+@keyframes hit {
+  0% {
+    opacity: 1;
+    transform: scale(0);
+  }
+  100%{
+    opacity: 0;
+    transform: scale(4);
+  }
+}
+@keyframes boom {
+  0% {
+    background-color: rgb(235, 13, 13);
+  }
+  100%{
+    background-color: hsl(0, 0%, 80%);
+  }
+}
+
+  
+.connected, .ready {
+  font-weight: normal;
+}
+  
+.connected span,
+.ready span {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: red;
+}
+  
+span.green {
+  background: green;
+}
